@@ -26,26 +26,26 @@ const EDGES = [
 const MAX_SELECTION = 10;
 
 export default function PixarNode() {
-  const [selectedSequence, setSelectedSequence] = useState<string[]>([]);
-  const [hoveredEdge, setHoveredEdge] = useState<number | null>(null);
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
-  const [analysisResult, setAnalysisResult] = useState<any>(null);
+  const [selectedSequence, setSelectedSequence] = useState([]);
+  const [hoveredEdge, setHoveredEdge] = useState(null);
+  const [hoveredNode, setHoveredNode] = useState(null);
+  const [analysisResult, setAnalysisResult] = useState(null);
   const [showTheoryPanel, setShowTheoryPanel] = useState(false);
-  const [activeTab, setActiveTab] = useState<'trayecto' | 'cicloEuler' | 'cicloHamil'>('trayecto');
+  const [activeTab, setActiveTab] = useState('trayecto');
 
-  const getEdgeBetween = (u: string, v: string) => {
+  const getEdgeBetween = (u, v) => {
     return EDGES.find(e => 
       (e.source === u && e.target === v) || (e.source === v && e.target === u)
     );
   };
 
-  const getEdgeIndex = (u: string, v: string) => {
+  const getEdgeIndex = (u, v) => {
     return EDGES.findIndex(e => 
       (e.source === u && e.target === v) || (e.source === v && e.target === u)
     );
   };
 
-  const handleNodeClick = (actorId: string) => {
+  const handleNodeClick = (actorId) => {
     if (selectedSequence.length >= MAX_SELECTION) {
       setSelectedSequence([actorId]);
       setAnalysisResult(null);
@@ -72,7 +72,7 @@ export default function PixarNode() {
     setAnalysisResult(null);
   };
 
-  const analyzeSequence = (seq: string[]) => {
+  const analyzeSequence = (seq) => {
     if (seq.length < 2) return;
 
     let isCadena = true;
@@ -80,8 +80,8 @@ export default function PixarNode() {
     let isCiclo = false;
     let isTrayectoEuleriano = false;
 
-    const edgesVisitedIndices: number[] = [];
-    const verticesMap: Record<string, number> = {};
+    const edgesVisitedIndices = [];
+    const verticesMap = {};
 
     seq.forEach(v => verticesMap[v] = (verticesMap[v] || 0) + 1);
 
@@ -114,7 +114,7 @@ export default function PixarNode() {
       const uniqueEdgesVisited = new Set(edgesVisitedIndices);
       if (uniqueEdgesVisited.size === EDGES.length && !hasRepeatedEdges) {
         isTrayectoEuleriano = true;
-        setShowTheoryPanel(true); // Auto-open theory when eulerian path found
+        setShowTheoryPanel(true);
         setActiveTab('trayecto');
       }
     }
@@ -165,8 +165,8 @@ export default function PixarNode() {
 
               {/* Edges */}
               {EDGES.map((edge, index) => {
-                const u = ACTORS.find(a => a.id === edge.source)!;
-                const v = ACTORS.find(a => a.id === edge.target)!;
+                const u = ACTORS.find(a => a.id === edge.source);
+                const v = ACTORS.find(a => a.id === edge.target);
                 
                 let isSelected = false;
                 if (selectedSequence.length > 1) {
@@ -571,7 +571,7 @@ export default function PixarNode() {
   );
 }
 
-function AnalysisItem({ label, valid, desc, highlight = false }: { label: string, valid: boolean, desc: string, highlight?: boolean }) {
+function AnalysisItem({ label, valid, desc, highlight = false }) {
   return (
     <div className={`flex items-start gap-3 p-2 rounded ${valid ? (highlight ? 'bg-green-100 border border-green-200' : 'bg-green-50') : 'bg-slate-50'} transition-colors`}>
       <div className={`mt-1 w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${valid ? 'bg-green-500 text-white' : 'bg-slate-300 text-slate-500'}`}>
