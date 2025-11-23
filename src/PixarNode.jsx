@@ -142,7 +142,7 @@ export default function PixarNode() {
             </h1>
             <p className="text-blue-200 text-sm mt-1">Proyecto de Matemática Discreta</p>
           </div>
-          <div className="text-right text-xs text-blue-200 hidden md:block">
+          <div className="text-right text-xs text-blue-200 md:block">
             <p>J.P. Rodríguez • M.A. Meneses • Y.D. Vera</p>
             <p>Grupo 52</p>
           </div>
@@ -150,10 +150,10 @@ export default function PixarNode() {
       </header>
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 overflow-hidden flex flex-col md:flex-row">
+      <main className="flex-1 flex flex-col md:flex-row">
         
         {/* LEFT: GRAPH CANVAS AREA */}
-        <div className="flex-1 relative bg-slate-100 border-r border-slate-200 overflow-y-auto flex flex-col items-center">
+        <div className="flex-1 relative bg-slate-100 border-r border-slate-200 flex flex-col items-center">
           
           <div className="p-4 w-full flex justify-center">
              <svg width="800" height="600" viewBox="0 0 800 600" className="max-w-full h-auto drop-shadow-xl bg-white rounded-lg border border-slate-200">
@@ -187,11 +187,12 @@ export default function PixarNode() {
                   <g key={index} 
                      onMouseEnter={() => setHoveredEdge(index)}
                      onMouseLeave={() => setHoveredEdge(null)}
+                     onClick={() => setHoveredEdge(index)}
                      className="cursor-pointer transition-all duration-300">
                     <line 
                       x1={u.x} y1={u.y} x2={v.x} y2={v.y} 
                       stroke={isSelected ? "#2563eb" : (isHovered ? "#f59e0b" : "#cbd5e1")} 
-                      strokeWidth={isSelected || isHovered ? 6 : 3}
+                      strokeWidth={isSelected || isHovered ? 12 : 10}
                       strokeLinecap="round"
                     />
                     {isHovered && (
@@ -294,9 +295,9 @@ export default function PixarNode() {
                   
                   {/* TRAYECTO CONTENT */}
                   {activeTab === 'trayecto' && (
-                    <div className="flex items-start gap-6">
+                    <div className="flex flex-col md:flex-row gap-8 items-center">
                       <div className="flex-1">
-                        <h3 className="text-lg font-bold text-slate-800 mb-2">Teorema del Trayecto Euleriano</h3>
+                        <h3 className="text-lg font-bold text-slate-800 mb-2">Trayecto Euleriano</h3>
                         <p className="text-slate-600 text-sm mb-4 leading-relaxed">
                           Un grafo conexo admite un <strong>trayecto euleriano</strong> (recorrer todas las aristas sin repetir) si y solo si tiene <strong>2 vértices de grado impar</strong>.
                         </p>
@@ -317,7 +318,7 @@ export default function PixarNode() {
                   {activeTab === 'cicloEuler' && (
                     <div className="flex flex-col md:flex-row gap-8 items-center">
                       <div className="flex-1">
-                        <h3 className="text-lg font-bold text-slate-800 mb-2">Ciclo (Circuito) Euleriano</h3>
+                        <h3 className="text-lg font-bold text-slate-800 mb-2">Ciclo Euleriano</h3>
                         <p className="text-slate-600 text-sm mb-3">
                           Es un trayecto que recorre todas las aristas y <strong>regresa al punto de partida</strong>.
                         </p>
@@ -355,9 +356,9 @@ export default function PixarNode() {
                   {/* HAMILTONIAN CONTENT */}
                   {activeTab === 'cicloHamil' && (
                     <div className="flex flex-col gap-6">
-                      <h3 className="text-lg font-bold text-slate-800 border-b pb-2">Teoremas de Existencia (Ciclo Hamiltoniano)</h3>
+                      <h3 className="text-lg font-bold text-slate-800 border-b pb-2">Ciclo Hamiltoniano</h3>
                       <p className="text-slate-600 text-sm">
-                        Buscan garantizar que existe un ciclo que visita <strong>todos los vértices</strong> una sola vez.
+                        Busca garantizar que existe un ciclo que visita <strong>todos los vértices</strong> una sola vez.
                       </p>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -464,8 +465,7 @@ export default function PixarNode() {
 
         </div>
 
-        {/* RIGHT: CONTROL PANEL */}
-        <div className="w-full md:w-80 bg-slate-50 p-6 border-l border-slate-200 overflow-y-auto flex-shrink-0">
+        <div className="w-full md:w-80 bg-slate-50 p-6 border-l border-slate-200 flex-shrink-0">
           
           <div className="mb-6">
             <h2 className="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
