@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Info, Play, RotateCcw, Film, BookOpen, GraduationCap, Sigma, Route } from 'lucide-react';
 import Latex from 'react-latex-next';
+import { toast } from 'react-toastify';
 
 const ACTORS = [
   { id: "John Ratzenberger", x: 400, y: 300 },
@@ -62,7 +63,11 @@ export default function PixarNode() {
         setSelectedSequence(newSequence);
         analyzeSequence(newSequence);
       } else {
-        alert(`No hay arista directa entre ${lastActor} y ${actorId}`);
+        toast.error(`No hay arista directa entre ${lastActor} y ${actorId}.`,{
+          autoClose: 3000,
+          hideProgressBar: true,
+          theme: 'colored',
+        });
       }
     }
   };
@@ -116,6 +121,11 @@ export default function PixarNode() {
         isTrayectoEuleriano = true;
         setShowTheoryPanel(true);
         setActiveTab('trayecto');
+        toast.success('¡Felicitaciones! Encontraste el trayecto euleriano.', {
+          autoClose: 3000,
+          hideProgressBar: true,
+          theme: 'colored',
+        })
       }
     }
 
